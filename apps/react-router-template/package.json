@@ -1,0 +1,37 @@
+{
+  "name": "react-router-template",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "codegen": "graphql-codegen"
+  },
+  "dependencies": {
+    "@primer/primitives": "^11.5.1",
+    "@primer/react": "^38.16.0",
+    "@react-router/node": "7.13.1",
+    "@react-router/serve": "7.13.1",
+    "@thor-commerce/app-bridge-react": "^0.6.3",
+    "@thor-commerce/thor-app-react-router": "^0.5.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router": "7.13.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^6.2.1",
+    "@react-router/dev": "7.13.1",
+    "@thor-commerce/graphql-codegen-preset": "^0.4.4",
+    "@types/node": "^22",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "graphql": "^16.13.1",
+    "graphql-config": "^5.1.6",
+    "isbot": "^5.1.36",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
