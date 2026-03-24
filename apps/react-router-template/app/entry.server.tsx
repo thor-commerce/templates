@@ -13,7 +13,7 @@ export default async function handleRequest(
 ) {
   let shellRendered = false;
   const userAgent = request.headers.get("user-agent");
-  addDocumentResponseHeaders(responseHeaders, request);
+  addDocumentResponseHeaders(request, responseHeaders);
 
   const body = await renderToReadableStream(
     <ServerRouter context={routerContext} url={request.url} />,

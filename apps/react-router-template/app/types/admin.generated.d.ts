@@ -1,25 +1,25 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-import type * as ThorAdminTypes from './admin.types.js';
+import type * as AdminTypes from './admin.types.js';
 
-export type GetProductsQueryVariables = ThorAdminTypes.Exact<{ [key: string]: never; }>;
+export type GetProductsQueryVariables = AdminTypes.Exact<{ [key: string]: never; }>;
 
 
-export type GetProductsQuery = { products: { nodes?: ThorAdminTypes.Maybe<Array<(
-      Pick<ThorAdminTypes.Product, 'id' | 'name'>
+export type GetProductsQuery = { products: { nodes?: AdminTypes.Maybe<Array<(
+      Pick<AdminTypes.Product, 'id' | 'name'>
       & { variants: (
-        Pick<ThorAdminTypes.ProductVariantConnection, 'totalCount'>
-        & { nodes?: ThorAdminTypes.Maybe<Array<Pick<ThorAdminTypes.ProductVariant, 'id' | 'barcode'>>> }
+        Pick<AdminTypes.ProductVariantConnection, 'totalCount'>
+        & { nodes?: AdminTypes.Maybe<Array<Pick<AdminTypes.ProductVariant, 'id' | 'barcode'>>> }
       ) }
     )>> } };
 
-export type GetProductDetailQueryVariables = ThorAdminTypes.Exact<{
-  id: ThorAdminTypes.Scalars['ID']['input'];
+export type GetProductDetailQueryVariables = AdminTypes.Exact<{
+  id: AdminTypes.Scalars['ID']['input'];
 }>;
 
 
-export type GetProductDetailQuery = { product?: ThorAdminTypes.Maybe<Pick<ThorAdminTypes.Product, 'id' | 'name' | 'description'>> };
+export type GetProductDetailQuery = { product?: AdminTypes.Maybe<Pick<AdminTypes.Product, 'id' | 'name' | 'description'>> };
 
 interface GeneratedQueryTypes {
   "\n    query GetProducts {\n      products {\n        nodes {\n          id\n          name\n          # slug // automatic typegen and schema validation\n          variants {\n            totalCount\n            nodes {\n              id\n              barcode\n            }\n          }\n        }\n      }\n    }\n  ": {return: GetProductsQuery, variables: GetProductsQueryVariables},
@@ -29,12 +29,7 @@ interface GeneratedQueryTypes {
 interface GeneratedMutationTypes {
 }
 declare module '@thor-commerce/admin-client' {
-  type InputMaybe<T> = ThorAdminTypes.InputMaybe<T>;
-  interface AdminQueries extends GeneratedQueryTypes {}
-  interface AdminMutations extends GeneratedMutationTypes {}
-}
-declare module '@thor-commerce/thor-app-react-router/server' {
-  type InputMaybe<T> = ThorAdminTypes.InputMaybe<T>;
+  type InputMaybe<T> = AdminTypes.InputMaybe<T>;
   interface AdminQueries extends GeneratedQueryTypes {}
   interface AdminMutations extends GeneratedMutationTypes {}
 }

@@ -21,11 +21,11 @@ importers:
         specifier: 7.13.1
         version: 7.13.1(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
       '@thor-commerce/app-bridge-react':
-        specifier: ^0.6.3
-        version: 0.6.3(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        specifier: ^0.9.0
+        version: 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@thor-commerce/thor-app-react-router':
-        specifier: ^0.5.6
-        version: 0.5.6(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        specifier: ^2.0.8
+        version: 2.0.8(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -42,9 +42,12 @@ importers:
       '@react-router/dev':
         specifier: 7.13.1
         version: 7.13.1(@react-router/serve@7.13.1(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3))(@types/node@22.19.15)(jiti@2.6.1)(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(yaml@2.8.3))(yaml@2.8.3)
+      '@thor-commerce/admin-client':
+        specifier: ^1.0.8
+        version: 1.0.8
       '@thor-commerce/graphql-codegen-preset':
-        specifier: ^0.4.4
-        version: 0.4.4(@types/node@22.19.15)(typescript@5.9.3)
+        specifier: ^1.0.2
+        version: 1.0.2(@types/node@22.19.15)(typescript@5.9.3)
       '@types/node':
         specifier: ^22
         version: 22.19.15
@@ -1083,12 +1086,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@shopify/graphql-codegen@0.1.0':
-    resolution: {integrity: sha512-G3sSesLj7Czt/J2Bj+XlQ8u4pkfQEt32hsjoS3UGZlf1eAiVw0aBBddp+NI5HqBAi0gM/f7GLRAhG3kktPhZmA==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-
   '@tanstack/react-virtual@3.13.23':
     resolution: {integrity: sha512-XnMRnHQ23piOVj2bzJqHrRrLg4r+F86fuBcwteKfbIjJrtGxb4z7tIvPVAe4B+4UVwo9G4Giuz5fmapcrnZ0OQ==}
     peerDependencies:
@@ -1098,11 +1095,11 @@ packages:
   '@tanstack/virtual-core@3.13.23':
     resolution: {integrity: sha512-zSz2Z2HNyLjCplANTDyl3BcdQJc2k1+yyFoKhNRmCr7V7dY8o8q5m8uFTI1/Pg1kL+Hgrz6u3Xo6eFUB7l66cg==}
 
-  '@thor-commerce/admin-client@0.3.5':
-    resolution: {integrity: sha512-n7vb0RqHloCYqsj8ULhK9yT4oPNs8pUElyb6yRTcEi2caRjst+DUTnflW1v5wO2Oh8lPe0u6a1pokJU0N9z5ig==}
+  '@thor-commerce/admin-client@1.0.8':
+    resolution: {integrity: sha512-ShpS0+uybvypIJWYo12upyNADrWOulgdPITKx3xwu0YOOjVwkWA4cQNZDNsQOWfQmU2xnmMSgm5K/15vTKtiTQ==}
 
-  '@thor-commerce/app-bridge-react@0.6.3':
-    resolution: {integrity: sha512-vdrHUQOpvHBfYILDOpt811KIVa6Bb0zsNJW+dKxc/7E2CBOWT4Os61oO1DOtlUV1Y2UELksAuOte8h2XlUw5zw==}
+  '@thor-commerce/app-bridge-react@0.9.0':
+    resolution: {integrity: sha512-4FWg0ISfwFDbGIkGZ9MdsOpl+TyhL6pqlJilxNP04NQcOT0x0XlVT+LpqEnYQS3JoF/hjG4NEJQWxsfDY2FJXQ==}
     peerDependencies:
       next: '>=13.4.0'
       react: '>=18.2.0'
@@ -1113,17 +1110,24 @@ packages:
       react-router:
         optional: true
 
-  '@thor-commerce/graphql-client@0.5.3':
-    resolution: {integrity: sha512-X8ivkEflgqyNhXZaptsWTYVegFvHI+rAj5nXTv+4nO+CCGTQ66/HCRCSx3cJKD61OvViOIQb+ZB7iX6ZPLg54g==}
+  '@thor-commerce/graphql-client@1.0.6':
+    resolution: {integrity: sha512-zu4MctlLDIgMSxvcT3HJRPQ9nch4Yl+wjX6zaHSYZ48beo4jA5AL+OM9CYFzbdRugfCwOXLsbCh+gaOqTZNJAQ==}
 
-  '@thor-commerce/graphql-codegen-preset@0.4.4':
-    resolution: {integrity: sha512-7j2AfN+C90IV21yXBUbXMS2d/JhD8O7UnYVH5dTiKVewAodHRgq8up5giBxPQNR4gvuCc5TbwJNNnI5KdKOoHg==}
+  '@thor-commerce/graphql-codegen-preset@1.0.2':
+    resolution: {integrity: sha512-MhzhC+mNLSR9uAblrPyBZwruqkx7MCDXRnvRNrE1hr5pUn3NLX4c3MQLNtkJAFOphacUQ/Ese50I4/Kp85UJZw==}
 
-  '@thor-commerce/thor-api@0.3.1':
-    resolution: {integrity: sha512-c1guu2Zb5+Y71PZsg4GaKnG+WL8s6ZjRB7XxaBmn+AvFrQiAUgWe8S3q6xNNzQTd2OToaOzbPqVncDh4zRoQSw==}
+  '@thor-commerce/graphql-codegen@1.0.2':
+    resolution: {integrity: sha512-IlGDvJZupwJSpTP3meK1cV04Ocq7AuZWbk5UcGb2THYQKLX68QKuPTRUpSjiSDobjmZlYM8zXzzHu2hbUNsKoQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  '@thor-commerce/thor-app-react-router@0.5.6':
-    resolution: {integrity: sha512-wmvfyVTFbn1G8y2famoQX9nFNaYNnPHBblqMxoB+Ke3B2nqzGx1cS+k0o/nBG12lA9L9mc9nZ+OdRe/Mh3UvqQ==}
+  '@thor-commerce/thor-api@1.0.15':
+    resolution: {integrity: sha512-e2QQnEXCQ9J1kwCLLGeg0aJQJ0i5dhbMOpZYOGADVfG8JhlbNqzWB4lc32jZMGtJDsmj9xrdzCJlkSXvjDSb3Q==}
+    engines: {node: '>=20.0.0'}
+
+  '@thor-commerce/thor-app-react-router@2.0.8':
+    resolution: {integrity: sha512-Nm6TtEtH+BnR8oEsfLrc3Ix0RP5ykOpaQyQxTCklCzYyyVyLNmgnKmvKwDu6Ux33oZx6Nd87/bm1ZL2Qv0r+wA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -3272,7 +3276,7 @@ snapshots:
       '@whatwg-node/promise-helpers': 1.3.2
       cross-inspect: 1.0.1
       graphql: 16.13.1
-      tslib: 2.6.3
+      tslib: 2.8.1
 
   '@graphql-tools/utils@11.0.0(graphql@16.13.1)':
     dependencies:
@@ -3667,16 +3671,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.59.1':
     optional: true
 
-  '@shopify/graphql-codegen@0.1.0(graphql@16.13.1)':
-    dependencies:
-      '@graphql-codegen/add': 5.0.3(graphql@16.13.1)
-      '@graphql-codegen/typescript': 4.1.6(graphql@16.13.1)
-      '@graphql-codegen/typescript-operations': 4.6.1(graphql@16.13.1)
-      graphql: 16.13.1
-      type-fest: 4.41.0
-    transitivePeerDependencies:
-      - graphql-sock
-
   '@tanstack/react-virtual@3.13.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@tanstack/virtual-core': 3.13.23
@@ -3685,25 +3679,25 @@ snapshots:
 
   '@tanstack/virtual-core@3.13.23': {}
 
-  '@thor-commerce/admin-client@0.3.5':
+  '@thor-commerce/admin-client@1.0.8':
     dependencies:
-      '@thor-commerce/graphql-client': 0.5.3
+      '@thor-commerce/graphql-client': 1.0.6
 
-  '@thor-commerce/app-bridge-react@0.6.3(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+  '@thor-commerce/app-bridge-react@0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
     optionalDependencies:
       react-router: 7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
-  '@thor-commerce/graphql-client@0.5.3': {}
+  '@thor-commerce/graphql-client@1.0.6': {}
 
-  '@thor-commerce/graphql-codegen-preset@0.4.4(@types/node@22.19.15)(typescript@5.9.3)':
+  '@thor-commerce/graphql-codegen-preset@1.0.2(@types/node@22.19.15)(typescript@5.9.3)':
     dependencies:
       '@graphql-codegen/cli': 6.2.1(@types/node@22.19.15)(graphql@16.13.1)(typescript@5.9.3)
       '@graphql-codegen/introspection': 5.0.1(graphql@16.13.1)
       '@graphql-codegen/plugin-helpers': 6.2.0(graphql@16.13.1)
       '@graphql-codegen/typescript': 5.0.9(graphql@16.13.1)
-      '@shopify/graphql-codegen': 0.1.0(graphql@16.13.1)
+      '@thor-commerce/graphql-codegen': 1.0.2(graphql@16.13.1)
       graphql: 16.13.1
       graphql-config: 5.1.6(@types/node@22.19.15)(graphql@16.13.1)(typescript@5.9.3)
     transitivePeerDependencies:
@@ -3718,21 +3712,33 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@thor-commerce/thor-api@0.3.1':
+  '@thor-commerce/graphql-codegen@1.0.2(graphql@16.13.1)':
     dependencies:
-      '@thor-commerce/admin-client': 0.3.5
-      '@thor-commerce/graphql-client': 0.5.3
+      '@graphql-codegen/add': 5.0.3(graphql@16.13.1)
+      '@graphql-codegen/typescript': 4.1.6(graphql@16.13.1)
+      '@graphql-codegen/typescript-operations': 4.6.1(graphql@16.13.1)
+      graphql: 16.13.1
+      type-fest: 4.41.0
+    transitivePeerDependencies:
+      - graphql-sock
+
+  '@thor-commerce/thor-api@1.0.15':
+    dependencies:
+      '@thor-commerce/admin-client': 1.0.8
+      '@thor-commerce/graphql-client': 1.0.6
       compare-versions: 6.1.1
       isbot: 5.1.36
       jose: 5.10.0
       lossless-json: 4.3.0
       tslib: 2.8.1
 
-  '@thor-commerce/thor-app-react-router@0.5.6(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+  '@thor-commerce/thor-app-react-router@2.0.8(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@thor-commerce/admin-client': 0.3.5
-      '@thor-commerce/app-bridge-react': 0.6.3(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
-      '@thor-commerce/thor-api': 0.3.1
+      '@thor-commerce/admin-client': 1.0.8
+      '@thor-commerce/app-bridge-react': 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+      '@thor-commerce/thor-api': 1.0.15
+      compare-versions: 6.1.1
+      isbot: 5.1.36
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       react-router: 7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

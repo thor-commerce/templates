@@ -1,9 +1,43 @@
-import "@thor-commerce/thor-app-react-router/adapters/node";
 import {
-    MemorySessionStorage,
+    ApiVersion,
+    LogSeverity,
+    Session,
     thorApp,
+    type SessionStorage,
 } from "@thor-commerce/thor-app-react-router/server";
 
+
+export class MemorySessionStorage implements SessionStorage {
+    private sessions: Record<string, Session> = {};
+
+    public async storeSession(session: Session): Promise<boolean> {
+        this.sessions[session.id] = session;
+        return true;
+    }
+
+    public async loadSession(id: string): Promise<Session | undefined> {
+        return this.sessions[id] ?? undefined;
+    }
+
+    public async deleteSession(id: string): Promise<boolean> {
+        delete this.sessions[id];
+        return true;
+    }
+
+    public async deleteSessions(ids: string[]): Promise<boolean> {
+        for (const id of ids) {
+            delete this.sessions[id];
+        }
+
+        return true;
+    }
+
+    public async findSessionsByProject(project: string): Promise<Session[]> {
+        return Object.values(this.sessions).filter(
+            (session) => session.project === project,
+        );
+    }
+}
 
 const thor = thorApp({
     // The client ID of your app. This is required for authentication and must match the client ID configured in your app settings on the Thor Partner Dashboard.
@@ -16,6 +50,15 @@ const thor = thorApp({
     appUrl: process.env.THOR_APP_URL || "",
     // For development, we can use in-memory session storage. In production, you should use a more robust solution.
     sessionStorage: new MemorySessionStorage(),
+    apiVersion: ApiVersion.April25,
+    logger: {
+        level: LogSeverity.Debug,
+        httpRequests: true,
+        timestamps: true,
+        log: (severity, message) => {
+            console.log(`[thor:${severity}] ${message}`);
+        },
+    }
 });
 
 export default thor;
