@@ -58,10 +58,11 @@ const thor = thorApp({
         log: (severity, message) => {
             console.log(`[thor:${severity}] ${message}`);
         },
-    }
+    },
 });
 
 export default thor;
 export const addDocumentResponseHeaders = thor.addDocumentResponseHeaders;
+export const registerWebhooks = thor.registerWebhooks;
 export const authenticate = thor.authenticate;
 export const sessionStorage = thor.sessionStorage;

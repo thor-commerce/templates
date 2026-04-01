@@ -24,8 +24,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@thor-commerce/thor-app-react-router':
-        specifier: ^2.0.8
-        version: 2.0.8(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        specifier: ^2.1.0
+        version: 2.1.0(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -1122,12 +1122,12 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  '@thor-commerce/thor-api@1.0.15':
-    resolution: {integrity: sha512-e2QQnEXCQ9J1kwCLLGeg0aJQJ0i5dhbMOpZYOGADVfG8JhlbNqzWB4lc32jZMGtJDsmj9xrdzCJlkSXvjDSb3Q==}
+  '@thor-commerce/thor-api@1.1.0':
+    resolution: {integrity: sha512-289i6+SkkCRMji2e4H2JCnpOWMB2iWF8SjII8vMnamuEQkjHscJV0UEz/6if6J694omgb8cbjCGRGQFXdybEoA==}
     engines: {node: '>=20.0.0'}
 
-  '@thor-commerce/thor-app-react-router@2.0.8':
-    resolution: {integrity: sha512-Nm6TtEtH+BnR8oEsfLrc3Ix0RP5ykOpaQyQxTCklCzYyyVyLNmgnKmvKwDu6Ux33oZx6Nd87/bm1ZL2Qv0r+wA==}
+  '@thor-commerce/thor-app-react-router@2.1.0':
+    resolution: {integrity: sha512-4nxiypQ29bVkYM2NZ1pM2rlgKcQTah09aARc4bUeG7RWSKXkDpOchsgyG+PewqWLX6k10DggglLS7kAbCvVkJQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -3722,7 +3722,7 @@ snapshots:
     transitivePeerDependencies:
       - graphql-sock
 
-  '@thor-commerce/thor-api@1.0.15':
+  '@thor-commerce/thor-api@1.1.0':
     dependencies:
       '@thor-commerce/admin-client': 1.0.8
       '@thor-commerce/graphql-client': 1.0.6
@@ -3732,11 +3732,11 @@ snapshots:
       lossless-json: 4.3.0
       tslib: 2.8.1
 
-  '@thor-commerce/thor-app-react-router@2.0.8(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+  '@thor-commerce/thor-app-react-router@2.1.0(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@thor-commerce/admin-client': 1.0.8
       '@thor-commerce/app-bridge-react': 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
-      '@thor-commerce/thor-api': 1.0.15
+      '@thor-commerce/thor-api': 1.1.0
       compare-versions: 6.1.1
       isbot: 5.1.36
       react: 19.2.4
