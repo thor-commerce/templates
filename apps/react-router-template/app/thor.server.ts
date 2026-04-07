@@ -51,6 +51,7 @@ const thor = thorApp({
     // For development, we can use in-memory session storage. In production, you should use a more robust solution.
     sessionStorage: new MemorySessionStorage(),
     apiVersion: ApiVersion.April25,
+    authPathPrefix: "/api/auth",
     logger: {
         level: LogSeverity.Debug,
         httpRequests: true,
