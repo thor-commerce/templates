@@ -1,87 +1,169 @@
-# Welcome to React Router!
+# Thor React Router Template
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Starter template for building embedded Thor Commerce apps with React Router v7, React 19, and TypeScript.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+This template includes:
 
-## Features
+- Thor app authentication for admin users
+- A webhook endpoint
+- Example admin GraphQL queries
+- Generated GraphQL types via codegen
+- Primer React for UI primitives
+- Server-side rendering with React Router
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Stack
+
+- `react-router@7`
+- `react@19`
+- `typescript`
+- `@thor-commerce/thor-app-react-router`
+- `@thor-commerce/app-bridge-react`
+- `@primer/react`
+- `graphql-codegen`
+
+## Requirements
+
+- Node.js 20+
+- pnpm
+- A Thor Commerce app with a client ID, client secret, app URL, and scopes
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and fill in the values from the Thor developer portal:
+
+```bash
+cp .env.example .env
+```
+
+Required variables:
+
+- `THOR_APP_CLIENT_ID`
+- `THOR_APP_CLIENT_SECRET`
+- `THOR_APP_URL`
+- `THOR_APP_SCOPES`
+
+Example:
+
+```env
+THOR_APP_CLIENT_ID="your-client-id"
+THOR_APP_CLIENT_SECRET="your-client-secret"
+THOR_APP_URL="http://localhost:3000"
+THOR_APP_SCOPES="products:view,channels:view"
+```
 
 ## Getting Started
 
-### Installation
-
-Install the dependencies:
+Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
-### Development
-
-Start the development server with HMR:
+Start the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+The app runs on [http://localhost:3000](http://localhost:3000).
 
-## Building for Production
+If you expose the app through ngrok, the Vite config already allows `*.ngrok-free.app` hosts.
 
-Create a production build:
+## Available Scripts
+
+- `pnpm dev` starts the local development server on port `3000`
+- `pnpm build` builds the server and client bundles
+- `pnpm start` serves the production build
+- `pnpm typecheck` generates React Router types and runs TypeScript
+- `pnpm codegen` regenerates GraphQL schema and document types into `app/types`
+
+## Project Structure
+
+```text
+app/
+  api/
+    auth.tsx                Thor auth entrypoint
+    webhook-handler.tsx     Webhook action endpoint
+  routes/
+    home.tsx                Product list example
+    product-detail/         Product detail example
+  root.tsx                  App shell, auth gate, AppProvider
+  thor.server.ts            Thor app configuration and session storage
+  types/                    Generated GraphQL schema and typings
+```
+
+## How It Works
+
+### Authentication
+
+`app/root.tsx` protects the app by calling `authenticate.admin(request)` in the root loader. The app is wrapped with `AppProvider` so it can run as an embedded Thor app.
+
+The auth callback route lives at `app/api/auth.tsx` and uses the Thor React Router server helpers.
+
+### GraphQL
+
+The example routes use the authenticated admin client returned from `authenticate.admin(request)`:
+
+- `app/routes/home.tsx` queries products and renders a table
+- `app/routes/product-detail/product-detail.tsx` loads a single product by ID
+
+GraphQL code generation is configured in `.graphqlrc.ts` and outputs generated files to `app/types`.
+
+When you add or change GraphQL documents, run:
 
 ```bash
-npm run build
+pnpm codegen
 ```
 
-## Deployment
+### Webhooks
 
-### Docker Deployment
+The template exposes `POST /api/webhook-handler` through `app/api/webhook-handler.tsx`.
 
-To build and run using Docker:
+That route verifies the webhook with `authenticate.webhook(request)` and gives you access to:
 
-```bash
-docker build -t my-app .
+- `payload`
+- `session`
+- `topic`
+- `project`
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+Replace the example `console.log` with your actual webhook handling logic.
 
-The containerized application can be deployed to any platform that supports Docker, including:
+### Sessions
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+`app/thor.server.ts` uses an in-memory `MemorySessionStorage` implementation for local development and template simplicity.
 
-### DIY Deployment
+That is not suitable for production. Replace it with persistent session storage before deploying.
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+## Routing
 
-Make sure to deploy the output of `npm run build`
+The template defines these routes in `app/routes.ts`:
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
+- `/` product list
+- `/products/:id` product detail page
+- `/api/auth/*` Thor auth flow
+- `/api/webhook-handler` webhook endpoint
 
 ## Styling
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+Styling is based on Primer primitives and Primer React. Global styles live in `app/app.css`.
 
----
+## Production Notes
 
-Built with ❤️ using React Router.
+- Replace in-memory sessions with durable storage
+- Set `THOR_APP_URL` to your deployed app URL
+- Make sure your configured scopes match the scopes requested by the app
+- Register any required webhooks for your production environment
+
+## Docker
+
+A `Dockerfile` is included, but review it before using it as-is in production. The current repository uses `pnpm`, while the Docker build is written around `npm`.
+
+## Next Steps
+
+Typical customizations after generating from this template:
+
+- swap `MemorySessionStorage` for a database-backed session store
+- add your own admin routes and loaders
+- add GraphQL mutations and regenerate types
+- implement real webhook processing
+- tighten logging and production configuration

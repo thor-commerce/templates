@@ -5,6 +5,17 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [reactRouter(), tsconfigPaths()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('@primer/react') || id.includes('root')) {
+            return 'root';
+          }
+        },
+      },
+    },
+  },
   ssr: {
     noExternal: ["@primer/react"],
   },
