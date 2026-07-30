@@ -89,11 +89,18 @@ apps/
 
 Before using a generated app in production:
 
-- Replace the in-memory session storage with durable storage.
+- Replace the in-memory session storage with durable storage. For Cloudflare
+  deployments, the template documents the
+  `@thor-commerce/thor-app-session-storage-d1@0.1.0` adapter and the complete
+  D1 provisioning and migration flow.
 - Set `THOR_APP_URL` to the deployed app URL.
 - Confirm requested scopes match the app's required functionality.
 - Register required webhooks for the production environment.
 - Review the included Dockerfile and deployment configuration for your target platform.
+
+See the template's
+[Cloudflare D1 session-storage guide](apps/react-router-template/README.md#cloudflare-d1-production-setup)
+before deploying an app to Cloudflare.
 
 ## Contributing Templates
 

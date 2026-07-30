@@ -145,25 +145,73 @@ The SDK uses `MemorySessionStorage` when `sessionStorage` is omitted. That
 keeps setup simple during development, but sessions are lost when the process
 restarts and are not shared between application instances.
 
-Configure persistent storage before deploying to production. Cloudflare apps
-can install the D1 adapter:
+The D1 adapter does not create a Cloudflare database automatically. It uses an
+existing D1 binding and can initialize its table, but provisioning the database
+remains an explicit deployment step.
+
+#### Cloudflare D1 production setup
+
+Install the adapter and Wrangler:
 
 ```bash
-pnpm add @thor-commerce/thor-app-session-storage-d1
+pnpm add @thor-commerce/thor-app-session-storage-d1@0.1.0
+pnpm add -D wrangler
 ```
 
-After creating a D1 database and applying the table SQL described by the
-package, pass its binding to `thorApp`:
+Create the database:
+
+```bash
+pnpm wrangler d1 create thor-app-sessions
+```
+
+Accept Wrangler's offer to update your configuration, then rename the
+generated binding to `THOR_SESSIONS`. The resulting `wrangler.jsonc` entry
+should look like:
+
+```jsonc
+{
+  "d1_databases": [
+    {
+      "binding": "THOR_SESSIONS",
+      "database_name": "thor-app-sessions",
+      "database_id": "<database-id>"
+    }
+  ]
+}
+```
+
+Copy the adapter's schema into a checked-in migration:
+
+```bash
+mkdir -p migrations
+cp node_modules/@thor-commerce/thor-app-session-storage-d1/schema.sql \
+  migrations/0001_thor_app_sessions.sql
+```
+
+Apply the migration locally and remotely:
+
+```bash
+pnpm wrangler d1 migrations apply thor-app-sessions --local
+pnpm wrangler d1 migrations apply thor-app-sessions --remote
+```
+
+Finally, pass the Worker binding to `thorApp` in `app/thor.server.ts`:
 
 ```ts
 import {env} from "cloudflare:workers";
 import {D1SessionStorage} from "@thor-commerce/thor-app-session-storage-d1";
 
 const thor = thorApp({
-  // clientId, clientSecret, scopes, appUrl, ...
+  clientId: process.env.THOR_APP_CLIENT_ID || "",
+  clientSecret: process.env.THOR_APP_CLIENT_SECRET || "",
+  scopes: process.env.THOR_APP_SCOPES?.split(","),
+  appUrl: process.env.THOR_APP_URL || "",
   sessionStorage: new D1SessionStorage(env.THOR_SESSIONS),
 });
 ```
+
+For prototypes, `await sessionStorage.initialize()` creates the table in an
+already-provisioned database. Use migrations in production.
 
 The existing `SessionStorage` interface is unchanged, so custom adapters and
 apps using older SDK versions continue to work.
