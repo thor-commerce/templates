@@ -9,9 +9,9 @@ export default {
             apiType: ApiType.Admin,
             documents: ["./app/**/*.{js,ts,jsx,tsx}", "./app/.server/**/*.{js,ts,jsx,tsx}"],
             outputDir: "./app/types",
+            baseUrl: process.env.THOR_API_BASE_URL || undefined,
         }),
     },
 } satisfies IGraphQLConfig;
-
 
 

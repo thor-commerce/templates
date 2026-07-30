@@ -13,7 +13,10 @@ import "./app.css";
 
 import type { Route } from "./+types/root";
 import { authenticate } from "./thor.server";
-import { AppProvider } from "@thor-commerce/thor-app-react-router/react";
+import {
+  AppProvider,
+  useAppAppearance,
+} from "@thor-commerce/thor-app-react-router/react";
 
 import { BaseStyles, ThemeProvider } from "@primer/react";
 import { boundary } from "@thor-commerce/thor-app-react-router/server";
@@ -32,6 +35,8 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const appearance = useAppAppearance();
+
   return (
     <html lang="en">
       <head>
@@ -42,7 +47,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ThemeProvider
-          colorMode="day"
+          colorMode={appearance === "dark" ? "night" : "day"}
           dayScheme="light"
           nightScheme="dark"
           preventSSRMismatch
@@ -63,12 +68,19 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   await authenticate.admin(request);
 
   // eslint-disable-next-line no-undef
-  return { clientId: process.env.THOR_APP_CLIENT_ID || "" };
+  return {
+    clientId: process.env.THOR_APP_CLIENT_ID || "",
+    appBridgeUrl: process.env.THOR_APP_BRIDGE_URL || undefined,
+  };
 };
 
 export default function App({ loaderData }: Route.ComponentProps) {
   return (
-    <AppProvider embedded clientId={loaderData.clientId}>
+    <AppProvider
+      embedded
+      clientId={loaderData.clientId}
+      appBridgeUrl={loaderData.appBridgeUrl}
+    >
       <Outlet />
     </AppProvider>
   );

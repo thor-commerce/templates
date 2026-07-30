@@ -10,6 +10,7 @@ This template includes:
 - Generated GraphQL types via codegen
 - Primer React for UI primitives
 - Server-side rendering with React Router
+- Automatic light/dark appearance synchronization with the Thor dashboard
 
 ## Stack
 
@@ -42,6 +43,13 @@ Required variables:
 - `THOR_APP_URL`
 - `THOR_APP_SCOPES`
 
+Thor API requests use `https://api.thorcommerce.io` by default. Development
+and enterprise installations can optionally set:
+
+- `THOR_API_BASE_URL`
+- `THOR_ADMIN_BASE_URL`
+- `THOR_APP_BRIDGE_URL`
+
 Example:
 
 ```env
@@ -49,6 +57,9 @@ THOR_APP_CLIENT_ID="your-client-id"
 THOR_APP_CLIENT_SECRET="your-client-secret"
 THOR_APP_URL="http://localhost:3000"
 THOR_APP_SCOPES="products:view,channels:view"
+# THOR_API_BASE_URL="https://dev-api.thorcommerce.io"
+# THOR_ADMIN_BASE_URL="https://dev-admin.thorcommerce.io"
+# THOR_APP_BRIDGE_URL="https://cdn.enterprise.example/global/thor-app-bridge.js"
 ```
 
 ## Getting Started
@@ -88,7 +99,7 @@ app/
     home.tsx                Product list example
     product-detail/         Product detail example
   root.tsx                  App shell, auth gate, AppProvider
-  thor.server.ts            Thor app configuration and session storage
+  thor.server.ts            Thor app configuration
   types/                    Generated GraphQL schema and typings
 ```
 
@@ -128,11 +139,40 @@ That route verifies the webhook with `authenticate.webhook(request)` and gives y
 
 Replace the example `console.log` with your actual webhook handling logic.
 
-### Sessions
+### Session storage
 
-`app/thor.server.ts` uses an in-memory `MemorySessionStorage` implementation for local development and template simplicity.
+The SDK uses `MemorySessionStorage` when `sessionStorage` is omitted. That
+keeps setup simple during development, but sessions are lost when the process
+restarts and are not shared between application instances.
 
-That is not suitable for production. Replace it with persistent session storage before deploying.
+Configure persistent storage before deploying to production. Cloudflare apps
+can install the D1 adapter:
+
+```bash
+pnpm add @thor-commerce/thor-app-session-storage-d1
+```
+
+After creating a D1 database and applying the table SQL described by the
+package, pass its binding to `thorApp`:
+
+```ts
+import {env} from "cloudflare:workers";
+import {D1SessionStorage} from "@thor-commerce/thor-app-session-storage-d1";
+
+const thor = thorApp({
+  // clientId, clientSecret, scopes, appUrl, ...
+  sessionStorage: new D1SessionStorage(env.THOR_SESSIONS),
+});
+```
+
+The existing `SessionStorage` interface is unchanged, so custom adapters and
+apps using older SDK versions continue to work.
+
+### Dashboard appearance
+
+The template uses `useAppAppearance()` to follow the dashboard's resolved
+light or dark appearance. Primer switches between its `light` and `dark`
+schemes automatically when the dashboard preference changes.
 
 ## Routing
 
@@ -149,10 +189,13 @@ Styling is based on Primer primitives and Primer React. Global styles live in `a
 
 ## Production Notes
 
-- Replace in-memory sessions with durable storage
 - Set `THOR_APP_URL` to your deployed app URL
 - Make sure your configured scopes match the scopes requested by the app
 - Register any required webhooks for your production environment
+- Configure persistent session storage; the default in-memory adapter is only
+  suitable for local development and tests
+- Leave the optional Thor endpoint variables unset to use the hosted production
+  API, admin, and App Bridge endpoints
 
 ## Docker
 
@@ -162,7 +205,6 @@ A `Dockerfile` is included, but review it before using it as-is in production. T
 
 Typical customizations after generating from this template:
 
-- swap `MemorySessionStorage` for a database-backed session store
 - add your own admin routes and loaders
 - add GraphQL mutations and regenerate types
 - implement real webhook processing

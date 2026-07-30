@@ -1,43 +1,7 @@
 import {
-    ApiVersion,
     LogSeverity,
-    Session,
     thorApp,
-    type SessionStorage,
 } from "@thor-commerce/thor-app-react-router/server";
-
-
-export class MemorySessionStorage implements SessionStorage {
-    private sessions: Record<string, Session> = {};
-
-    public async storeSession(session: Session): Promise<boolean> {
-        this.sessions[session.id] = session;
-        return true;
-    }
-
-    public async loadSession(id: string): Promise<Session | undefined> {
-        return this.sessions[id] ?? undefined;
-    }
-
-    public async deleteSession(id: string): Promise<boolean> {
-        delete this.sessions[id];
-        return true;
-    }
-
-    public async deleteSessions(ids: string[]): Promise<boolean> {
-        for (const id of ids) {
-            delete this.sessions[id];
-        }
-
-        return true;
-    }
-
-    public async findSessionsByProject(project: string): Promise<Session[]> {
-        return Object.values(this.sessions).filter(
-            (session) => session.project === project,
-        );
-    }
-}
 
 const thor = thorApp({
     // The client ID of your app. This is required for authentication and must match the client ID configured in your app settings on the Thor Partner Dashboard.
@@ -48,9 +12,13 @@ const thor = thorApp({
     scopes: process.env.THOR_APP_SCOPES?.split(","),
     // The URL of your app. This is required for authentication and must match the URL configured in your app settings on the Thor Partner Dashboard.
     appUrl: process.env.THOR_APP_URL || "",
-    // For development, we can use in-memory session storage. In production, you should use a more robust solution.
-    sessionStorage: new MemorySessionStorage(),
-    apiVersion: ApiVersion.April25,
+    // Optional overrides for development or enterprise Thor installations.
+    // Production defaults are used when these variables are not set.
+    apiBaseUrl: process.env.THOR_API_BASE_URL || undefined,
+    adminBaseUrl: process.env.THOR_ADMIN_BASE_URL || undefined,
+    appBridgeUrl: process.env.THOR_APP_BRIDGE_URL || undefined,
+    // Session storage defaults to process-local memory for development.
+    // Configure a persistent SessionStorage adapter before production.
     authPathPrefix: "/api/auth",
     logger: {
         level: LogSeverity.Debug,
