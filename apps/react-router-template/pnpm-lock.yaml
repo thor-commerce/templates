@@ -24,8 +24,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@thor-commerce/thor-app-react-router':
-        specifier: ^3.0.0
-        version: 3.0.1(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        specifier: ^3.0.2
+        version: 3.0.2(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -1139,8 +1139,8 @@ packages:
     resolution: {integrity: sha512-sT3y1xvsZGzS+TTDzVnZhybJxmoq3WRkR3m8+kYYj/Oxm8JsoG0dKOPsHu72nVgAr0uIX0CNE46/5JwwnjWb8w==}
     engines: {node: '>=20.0.0'}
 
-  '@thor-commerce/thor-app-react-router@3.0.1':
-    resolution: {integrity: sha512-oTkDDqIQFR8qPSybdpjyZ5P2aNTY29U27io518Hm4daUCH1fO2zj3PX6Zp9MzzrgRKw0WR1G+zU38PKvF2578Q==}
+  '@thor-commerce/thor-app-react-router@3.0.2':
+    resolution: {integrity: sha512-Gbnh7e2G8dUap6lGosQ8eVCyKZtEQQmyhCer0dAlW96Xw3EhQMML3JJ2FLPL3KFkKT3hfHuMQydaHcPHt9uB1w==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -1791,6 +1791,10 @@ packages:
     resolution: {integrity: sha512-C/ZtXyJqDPZ7G7JPr06ApWyYoHjYexQbS6hPYD4WYCzpv2Qes6Z+CCEfTX4Owzf+1EJ933PoI2p+B9v7wpGZBQ==}
     engines: {node: '>=18'}
 
+  isbot@5.2.1:
+    resolution: {integrity: sha512-dJ+LpKyClQZ7NG+j3OensC/mAZkGpukE9YUrgPYvAZj2doVL0edfDgywTUh5CXa0o+nW9a1V9e5+CJTX8+SxRw==}
+    engines: {node: '>=18'}
+
   isomorphic-ws@5.0.0:
     resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
     peerDependencies:
@@ -1868,8 +1872,8 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
 
-  lossless-json@4.3.0:
-    resolution: {integrity: sha512-ToxOC+SsduRmdSuoLZLYAr5zy1Qu7l5XhmPWM3zefCZ5IcrzW/h108qbJUKfOlDlhvhjUK84+8PSVX0kxnit0g==}
+  lossless-json@4.3.1:
+    resolution: {integrity: sha512-SqD/Bg3ZfltBJ2Z14hJ/BihnvtV553WO4g9/ePtlp4lrnl9jF3AdIJt53A/Wkg/0Li+LMfxaBqgx1MiFZdQlpQ==}
 
   lower-case-first@2.0.2:
     resolution: {integrity: sha512-EVm/rR94FJTZi3zefZ82fLWab+GX14LJN4HrWBcuo6Evmsl9hEfnqxgcHCKb9q+mNf6EVdsjx/qucYFIIB84pg==}
@@ -3741,18 +3745,18 @@ snapshots:
       '@thor-commerce/admin-client': 2.0.0
       '@thor-commerce/graphql-client': 1.0.6
       compare-versions: 6.1.1
-      isbot: 5.1.36
+      isbot: 5.2.1
       jose: 5.10.0
-      lossless-json: 4.3.0
+      lossless-json: 4.3.1
       tslib: 2.8.1
 
-  '@thor-commerce/thor-app-react-router@3.0.1(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+  '@thor-commerce/thor-app-react-router@3.0.2(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@thor-commerce/admin-client': 2.0.0
       '@thor-commerce/app-bridge-react': 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@thor-commerce/thor-api': 2.0.0
       compare-versions: 6.1.1
-      isbot: 5.1.36
+      isbot: 5.2.1
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       react-router: 7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -4424,6 +4428,8 @@ snapshots:
 
   isbot@5.1.36: {}
 
+  isbot@5.2.1: {}
+
   isomorphic-ws@5.0.0(ws@8.20.0):
     dependencies:
       ws: 8.20.0
@@ -4491,7 +4497,7 @@ snapshots:
     dependencies:
       js-tokens: 4.0.0
 
-  lossless-json@4.3.0: {}
+  lossless-json@4.3.1: {}
 
   lower-case-first@2.0.2:
     dependencies:
