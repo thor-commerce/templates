@@ -24,8 +24,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@thor-commerce/thor-app-react-router':
-        specifier: ^2.1.0
-        version: 2.1.0(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        specifier: ^3.0.0
+        version: 3.0.1(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -43,11 +43,11 @@ importers:
         specifier: 7.13.1
         version: 7.13.1(@react-router/serve@7.13.1(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3))(@types/node@22.19.15)(jiti@2.6.1)(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(yaml@2.8.3))(yaml@2.8.3)
       '@thor-commerce/admin-client':
-        specifier: ^1.0.8
-        version: 1.0.8
+        specifier: ^2.0.0
+        version: 2.0.0
       '@thor-commerce/graphql-codegen-preset':
-        specifier: ^1.0.2
-        version: 1.0.2(@types/node@22.19.15)(typescript@5.9.3)
+        specifier: ^1.1.0
+        version: 1.1.0(@types/node@22.19.15)(typescript@5.9.3)
       '@types/node':
         specifier: ^22
         version: 22.19.15
@@ -995,66 +995,79 @@ packages:
     resolution: {integrity: sha512-KUizqxpwaR2AZdAUsMWfL/C94pUu7TKpoPd88c8yFVixJ+l9hejkrwoK5Zj3wiNh65UeyryKnJyxL1b7yNqFQA==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.59.1':
     resolution: {integrity: sha512-MZoQ/am77ckJtZGFAtPucgUuJWiop3m2R3lw7tC0QCcbfl4DRhQUBUkHWCkcrT3pqy5Mzv5QQgY6Dmlba6iTWg==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.59.1':
     resolution: {integrity: sha512-Sez95TP6xGjkWB1608EfhCX1gdGrO5wzyN99VqzRtC17x/1bhw5VU1V0GfKUwbW/Xr1J8mSasoFoJa6Y7aGGSA==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.59.1':
     resolution: {integrity: sha512-9Cs2Seq98LWNOJzR89EGTZoiP8EkZ9UbQhBlDgfAkM6asVna1xJ04W2CLYWDN/RpUgOjtQvcv8wQVi1t5oQazA==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.59.1':
     resolution: {integrity: sha512-n9yqttftgFy7IrNEnHy1bOp6B4OSe8mJDiPkT7EqlM9FnKOwUMnCK62ixW0Kd9Clw0/wgvh8+SqaDXMFvw3KqQ==}
     cpu: [loong64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-loong64-musl@4.59.1':
     resolution: {integrity: sha512-SfpNXDzVTqs/riak4xXcLpq5gIQWsqGWMhN1AGRQKB4qGSs4r0sEs3ervXPcE1O9RsQ5bm8Muz6zmQpQnPss1g==}
     cpu: [loong64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-ppc64-gnu@4.59.1':
     resolution: {integrity: sha512-LjaChED0wQnjKZU+tsmGbN+9nN1XhaWUkAlSbTdhpEseCS4a15f/Q8xC2BN4GDKRzhhLZpYtJBZr2NZhR0jvNw==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-musl@4.59.1':
     resolution: {integrity: sha512-ojW7iTJSIs4pwB2xV6QXGwNyDctvXOivYllttuPbXguuKDX5vwpqYJsHc6D2LZzjDGHML414Tuj3LvVPe1CT1A==}
     cpu: [ppc64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-riscv64-gnu@4.59.1':
     resolution: {integrity: sha512-FP+Q6WTcxxvsr0wQczhSE+tOZvFPV8A/mUE6mhZYFW9/eea/y/XqAgRoLLMuE9Cz0hfX5bi7p116IWoB+P237A==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.59.1':
     resolution: {integrity: sha512-L1uD9b/Ig8Z+rn1KttCJjwhN1FgjRMBKsPaBsDKkfUl7GfFq71pU4vWCnpOsGljycFEbkHWARZLf4lMYg3WOLw==}
     cpu: [riscv64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.59.1':
     resolution: {integrity: sha512-EZc9NGTk/oSUzzOD4nYY4gIjteo2M3CiozX6t1IXGCOdgxJTlVu/7EdPeiqeHPSIrxkLhavqpBAUCfvC6vBOug==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.59.1':
     resolution: {integrity: sha512-NQ9KyU1Anuy59L8+HHOKM++CoUxrQWrZWXRik4BJFm+7i5NP6q/SW43xIBr80zzt+PDBJ7LeNmloQGfa0JGk0w==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.59.1':
     resolution: {integrity: sha512-GZkLk2t6naywsveSFBsEb0PLU+JC9ggVjbndsbG20VPhar6D1gkMfCx4NfP9owpovBXTN+eRdqGSkDGIxPHhmQ==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-openbsd-x64@4.59.1':
     resolution: {integrity: sha512-1hjG9Jpl2KDOetr64iQd8AZAEjkDUUK5RbDkYWsViYLC1op1oNzdjMJeFiofcGhqbNTaY2kfgqowE7DILifsrA==}
@@ -1095,8 +1108,8 @@ packages:
   '@tanstack/virtual-core@3.13.23':
     resolution: {integrity: sha512-zSz2Z2HNyLjCplANTDyl3BcdQJc2k1+yyFoKhNRmCr7V7dY8o8q5m8uFTI1/Pg1kL+Hgrz6u3Xo6eFUB7l66cg==}
 
-  '@thor-commerce/admin-client@1.0.8':
-    resolution: {integrity: sha512-ShpS0+uybvypIJWYo12upyNADrWOulgdPITKx3xwu0YOOjVwkWA4cQNZDNsQOWfQmU2xnmMSgm5K/15vTKtiTQ==}
+  '@thor-commerce/admin-client@2.0.0':
+    resolution: {integrity: sha512-DTY64wA3lA6YyOEj6hhKimovvwwB93rNE/Ek5gKoQLLDj5W9tzeA1m79sfxzQJpfbbWQt8o+bbluK0wTcE+YUw==}
 
   '@thor-commerce/app-bridge-react@0.9.0':
     resolution: {integrity: sha512-4FWg0ISfwFDbGIkGZ9MdsOpl+TyhL6pqlJilxNP04NQcOT0x0XlVT+LpqEnYQS3JoF/hjG4NEJQWxsfDY2FJXQ==}
@@ -1113,8 +1126,8 @@ packages:
   '@thor-commerce/graphql-client@1.0.6':
     resolution: {integrity: sha512-zu4MctlLDIgMSxvcT3HJRPQ9nch4Yl+wjX6zaHSYZ48beo4jA5AL+OM9CYFzbdRugfCwOXLsbCh+gaOqTZNJAQ==}
 
-  '@thor-commerce/graphql-codegen-preset@1.0.2':
-    resolution: {integrity: sha512-MhzhC+mNLSR9uAblrPyBZwruqkx7MCDXRnvRNrE1hr5pUn3NLX4c3MQLNtkJAFOphacUQ/Ese50I4/Kp85UJZw==}
+  '@thor-commerce/graphql-codegen-preset@1.1.0':
+    resolution: {integrity: sha512-v1fsHmob9bLa/ydcCf9UnMZnuyLzzmAKy1hTvFvwOx3lhAMdJ2aeOinURknI8cOKHOGbVPcnraWpBDUTmMZTKA==}
 
   '@thor-commerce/graphql-codegen@1.0.2':
     resolution: {integrity: sha512-IlGDvJZupwJSpTP3meK1cV04Ocq7AuZWbk5UcGb2THYQKLX68QKuPTRUpSjiSDobjmZlYM8zXzzHu2hbUNsKoQ==}
@@ -1122,12 +1135,12 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  '@thor-commerce/thor-api@1.1.0':
-    resolution: {integrity: sha512-289i6+SkkCRMji2e4H2JCnpOWMB2iWF8SjII8vMnamuEQkjHscJV0UEz/6if6J694omgb8cbjCGRGQFXdybEoA==}
+  '@thor-commerce/thor-api@2.0.0':
+    resolution: {integrity: sha512-sT3y1xvsZGzS+TTDzVnZhybJxmoq3WRkR3m8+kYYj/Oxm8JsoG0dKOPsHu72nVgAr0uIX0CNE46/5JwwnjWb8w==}
     engines: {node: '>=20.0.0'}
 
-  '@thor-commerce/thor-app-react-router@2.1.0':
-    resolution: {integrity: sha512-4nxiypQ29bVkYM2NZ1pM2rlgKcQTah09aARc4bUeG7RWSKXkDpOchsgyG+PewqWLX6k10DggglLS7kAbCvVkJQ==}
+  '@thor-commerce/thor-app-react-router@3.0.1':
+    resolution: {integrity: sha512-oTkDDqIQFR8qPSybdpjyZ5P2aNTY29U27io518Hm4daUCH1fO2zj3PX6Zp9MzzrgRKw0WR1G+zU38PKvF2578Q==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -2336,6 +2349,7 @@ packages:
   tsconfck@3.1.6:
     resolution: {integrity: sha512-ks6Vjr/jEw0P1gmOVwutM3B7fWxoWBL2KRDb1JfqGVawBmO5UsvmWOQFGHBPl5yxYz4eERr19E6L7NMv+Fej4w==}
     engines: {node: ^18 || >=20}
+    deprecated: unmaintained
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
@@ -3679,7 +3693,7 @@ snapshots:
 
   '@tanstack/virtual-core@3.13.23': {}
 
-  '@thor-commerce/admin-client@1.0.8':
+  '@thor-commerce/admin-client@2.0.0':
     dependencies:
       '@thor-commerce/graphql-client': 1.0.6
 
@@ -3691,7 +3705,7 @@ snapshots:
 
   '@thor-commerce/graphql-client@1.0.6': {}
 
-  '@thor-commerce/graphql-codegen-preset@1.0.2(@types/node@22.19.15)(typescript@5.9.3)':
+  '@thor-commerce/graphql-codegen-preset@1.1.0(@types/node@22.19.15)(typescript@5.9.3)':
     dependencies:
       '@graphql-codegen/cli': 6.2.1(@types/node@22.19.15)(graphql@16.13.1)(typescript@5.9.3)
       '@graphql-codegen/introspection': 5.0.1(graphql@16.13.1)
@@ -3722,9 +3736,9 @@ snapshots:
     transitivePeerDependencies:
       - graphql-sock
 
-  '@thor-commerce/thor-api@1.1.0':
+  '@thor-commerce/thor-api@2.0.0':
     dependencies:
-      '@thor-commerce/admin-client': 1.0.8
+      '@thor-commerce/admin-client': 2.0.0
       '@thor-commerce/graphql-client': 1.0.6
       compare-versions: 6.1.1
       isbot: 5.1.36
@@ -3732,11 +3746,11 @@ snapshots:
       lossless-json: 4.3.0
       tslib: 2.8.1
 
-  '@thor-commerce/thor-app-react-router@2.1.0(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+  '@thor-commerce/thor-app-react-router@3.0.1(react-dom@19.2.4(react@19.2.4))(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@thor-commerce/admin-client': 1.0.8
+      '@thor-commerce/admin-client': 2.0.0
       '@thor-commerce/app-bridge-react': 0.9.0(react-router@7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
-      '@thor-commerce/thor-api': 1.1.0
+      '@thor-commerce/thor-api': 2.0.0
       compare-versions: 6.1.1
       isbot: 5.1.36
       react: 19.2.4

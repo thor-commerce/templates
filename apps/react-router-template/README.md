@@ -56,7 +56,7 @@ Example:
 THOR_APP_CLIENT_ID="your-client-id"
 THOR_APP_CLIENT_SECRET="your-client-secret"
 THOR_APP_URL="http://localhost:3000"
-THOR_APP_SCOPES="products:view,channels:view"
+THOR_APP_SCOPES="offline_access,products:view,channels:view"
 # THOR_API_BASE_URL="https://dev-api.thorcommerce.io"
 # THOR_ADMIN_BASE_URL="https://dev-admin.thorcommerce.io"
 # THOR_APP_BRIDGE_URL="https://cdn.enterprise.example/global/thor-app-bridge.js"
@@ -204,7 +204,10 @@ import {D1SessionStorage} from "@thor-commerce/thor-app-session-storage-d1";
 const thor = thorApp({
   clientId: process.env.THOR_APP_CLIENT_ID || "",
   clientSecret: process.env.THOR_APP_CLIENT_SECRET || "",
-  scopes: process.env.THOR_APP_SCOPES?.split(","),
+  scopes: process.env.THOR_APP_SCOPES
+    ?.split(",")
+    .map((scope) => scope.trim())
+    .filter(Boolean),
   appUrl: process.env.THOR_APP_URL || "",
   sessionStorage: new D1SessionStorage(env.THOR_SESSIONS),
 });
@@ -238,7 +241,9 @@ Styling is based on Primer primitives and Primer React. Global styles live in `a
 ## Production Notes
 
 - Set `THOR_APP_URL` to your deployed app URL
-- Make sure your configured scopes match the scopes requested by the app
+- Make sure `THOR_APP_SCOPES` matches the scopes in the app's active version.
+  The SDK uses this list to invalidate stale stored sessions and trigger
+  reauthorization after permissions change.
 - Register any required webhooks for your production environment
 - Configure persistent session storage; the default in-memory adapter is only
   suitable for local development and tests

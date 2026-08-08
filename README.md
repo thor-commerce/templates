@@ -54,7 +54,7 @@ The React Router template expects these variables:
 THOR_APP_CLIENT_ID="your-client-id"
 THOR_APP_CLIENT_SECRET="your-client-secret"
 THOR_APP_URL="http://localhost:3000"
-THOR_APP_SCOPES="products:view,channels:view"
+THOR_APP_SCOPES="offline_access,products:view,channels:view"
 ```
 
 ## Common Commands
@@ -95,6 +95,9 @@ Before using a generated app in production:
   D1 provisioning and migration flow.
 - Set `THOR_APP_URL` to the deployed app URL.
 - Confirm requested scopes match the app's required functionality.
+- Keep `THOR_APP_SCOPES` synchronized with the active app version. The runtime
+  uses this list to reject stale stored sessions after permissions change and
+  send the merchant through Thor's authorization flow.
 - Register required webhooks for the production environment.
 - Review the included Dockerfile and deployment configuration for your target platform.
 

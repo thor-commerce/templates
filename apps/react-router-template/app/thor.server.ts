@@ -3,13 +3,25 @@ import {
     thorApp,
 } from "@thor-commerce/thor-app-react-router/server";
 
+const scopes = process.env.THOR_APP_SCOPES
+    ?.split(",")
+    .map((scope) => scope.trim())
+    .filter(Boolean);
+
+if (!scopes?.length) {
+    throw new Error(
+        "THOR_APP_SCOPES must list the scopes published in the app's active version.",
+    );
+}
+
 const thor = thorApp({
     // The client ID of your app. This is required for authentication and must match the client ID configured in your app settings on the Thor Partner Dashboard.
     clientId: process.env.THOR_APP_CLIENT_ID || "",
     //The client secret is only required if your app needs to make authenticated requests to the Thor API. If your app only needs to authenticate users and doesn't need to make authenticated requests to the Thor API, you can leave this blank.
     clientSecret: process.env.THOR_APP_CLIENT_SECRET || "",
-    // The scopes your app needs to function. This should match the scopes configured in your app settings on the Thor Partner Dashboard.
-    scopes: process.env.THOR_APP_SCOPES?.split(","),
+    // These scopes are also used to invalidate stored sessions after the app's permissions change.
+    // Keep them in sync with the scopes published in the app's active version.
+    scopes,
     // The URL of your app. This is required for authentication and must match the URL configured in your app settings on the Thor Partner Dashboard.
     appUrl: process.env.THOR_APP_URL || "",
     // Optional overrides for development or enterprise Thor installations.
