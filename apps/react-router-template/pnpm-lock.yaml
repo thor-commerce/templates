@@ -24,8 +24,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@thor-commerce/thor-app-react-router':
-        specifier: ^3.0.4
-        version: 3.0.4(react-dom@19.2.8(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
+        specifier: ^3.0.5
+        version: 3.0.5(react-dom@19.2.8(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       react:
         specifier: ^19.2.4
         version: 19.2.8
@@ -1134,8 +1134,8 @@ packages:
     resolution: {integrity: sha512-ula0fW1dsK5INcG2fM9mTeAQ3Xto4i21BcLUbCu9KNOuvd1lwiN+EQC3QWoik3wi6pE98WvxSF8LjCm0bBH2pA==}
     engines: {node: '>=20.0.0'}
 
-  '@thor-commerce/thor-app-react-router@3.0.4':
-    resolution: {integrity: sha512-TBCWvyk3ssYYw0RY7GlH5fZxEc0P78Yf5jeMf0FYQx+80w93UknIOGYvUaCTLmE7mo84DRHS9luLA5nrYQlRXw==}
+  '@thor-commerce/thor-app-react-router@3.0.5':
+    resolution: {integrity: sha512-1wviE1N1XxDaSuqUW9skTfwPXiTp+4l6JEH6tXH2v19FSccpdcdzDvIsDe2cGBaqcXtScj/GSJLJm2k8S0It3Q==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -3258,7 +3258,7 @@ snapshots:
       '@whatwg-node/promise-helpers': 1.3.2
       cross-inspect: 1.0.1
       graphql: 16.14.2
-      tslib: 2.6.3
+      tslib: 2.8.1
 
   '@graphql-tools/utils@11.2.2(graphql@16.14.2)':
     dependencies:
@@ -3708,7 +3708,7 @@ snapshots:
       lossless-json: 4.3.1
       tslib: 2.8.1
 
-  '@thor-commerce/thor-app-react-router@3.0.4(react-dom@19.2.8(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
+  '@thor-commerce/thor-app-react-router@3.0.5(react-dom@19.2.8(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@thor-commerce/admin-client': 2.0.0
       '@thor-commerce/app-bridge-react': 0.9.0(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
