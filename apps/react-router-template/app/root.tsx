@@ -1,5 +1,4 @@
 import {
-  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
@@ -12,7 +11,6 @@ import {
 import "./app.css";
 
 import type { Route } from "./+types/root";
-import { authenticate } from "./thor.server";
 import {
   AppProvider,
   useAppAppearance,
@@ -63,10 +61,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
-  //ensure the user is authenticated as an admin before allowing access to the app
-  await authenticate.admin(request);
-
+export const loader = async () => {
   // eslint-disable-next-line no-undef
   return {
     clientId: process.env.THOR_APP_CLIENT_ID || "",

@@ -98,7 +98,7 @@ app/
   routes/
     home.tsx                Product list example
     product-detail/         Product detail example
-  root.tsx                  App shell, auth gate, AppProvider
+  root.tsx                  App shell and AppProvider
   thor.server.ts            Thor app configuration
   types/                    Generated GraphQL schema and typings
 ```
@@ -107,7 +107,10 @@ app/
 
 ### Authentication
 
-`app/root.tsx` protects the app by calling `authenticate.admin(request)` in the root loader. The app is wrapped with `AppProvider` so it can run as an embedded Thor app.
+Each protected route calls `authenticate.admin(request)` in its own loader. Do
+not also authenticate in the root loader: React Router runs matched loaders in
+parallel, so doing both can race when an expiring offline token is refreshed.
+The app is wrapped with `AppProvider` so it can run as an embedded Thor app.
 
 The auth callback route lives at `app/api/auth.tsx` and uses the Thor React Router server helpers.
 
