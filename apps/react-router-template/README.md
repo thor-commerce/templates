@@ -226,7 +226,11 @@ apps using older SDK versions continue to work.
 
 The template uses `useAppAppearance()` to follow the dashboard's resolved
 light or dark appearance. Primer switches between its `light` and `dark`
-schemes automatically when the dashboard preference changes.
+schemes automatically when the dashboard preference changes. The last value
+reported by App Bridge is cached in browser storage and a cookie so subsequent
+document navigations render the matching scheme before React starts, avoiding
+a flash of the light theme in dark mode. The dashboard remains the source of
+truth and overwrites the cached value whenever its resolved appearance changes.
 
 ## Routing
 
