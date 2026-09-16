@@ -30,14 +30,17 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6(react-dom@19.2.8(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@thor-commerce/ui':
-        specifier: ^0.1.0
-        version: 0.1.0(@primer/octicons-react@19.33.0(react@19.2.8))(@primer/react@38.35.0(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-is@19.2.8)(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(recharts@2.15.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
+        specifier: ^0.1.1
+        version: 0.1.1(@primer/octicons-react@19.33.0(react@19.2.8))(@primer/react@38.35.0(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-is@19.2.8)(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-hook-form@7.88.0(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(recharts@2.15.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       react:
         specifier: ^19.2.4
         version: 19.2.8
       react-dom:
         specifier: ^19.2.4
         version: 19.2.8(react@19.2.8)
+      react-hook-form:
+        specifier: ^7.53.1
+        version: 7.88.0(react@19.2.8)
       react-router:
         specifier: 7.13.1
         version: 7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -1199,14 +1202,15 @@ packages:
       react-dom: '>=18'
       react-router: '>=7.0.0'
 
-  '@thor-commerce/ui@0.1.0':
-    resolution: {integrity: sha512-zfIdTCDEQEAHuiH7e2wTLkT9nJHsBkNZSMzW/5VmPnNc7Er3tr7lnL+FLyzYI/b8Q1LID9jAOYNx9xwruJMGHA==}
+  '@thor-commerce/ui@0.1.1':
+    resolution: {integrity: sha512-IDb5HeJmIE2OxLwH455UF+MBe6xuYy2RuFWOIPXrvB+D+5/8YO2Zs85QOIV0Pth1nLznN5kZ+1128XcHPPtArg==}
     engines: {node: '>=22.22.0'}
     peerDependencies:
       '@primer/octicons-react': '>=19.23.0 <20'
       '@primer/react': '>=38.16.0 <39'
       react: '>=19.2.0 <20'
       react-dom: '>=19.2.0 <20'
+      react-hook-form: '>=7.53.0 <8'
       react-router: '>=7.13.0 <9'
       recharts: '>=2.14.0 <3'
 
@@ -2284,6 +2288,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-hook-form@7.88.0:
+    resolution: {integrity: sha512-QRaLOWhX93YCnMiRfnOFRSwWXZNt8qhm2JTZwypoDvKpSffTJHmpzMXt8U6PV5UThvL3IiiLDUWe2nHMtz6Mmw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || ^19
 
   react-intersection-observer@10.1.0:
     resolution: {integrity: sha512-V8HDu3+Llg6OEhOxx8LnUSS0t4VS+1Xk9ZatkI8Jct/H0CwKnqFTCu8NT3q7ghJTghTdIrEMPSWr2dkKPG+gdQ==}
@@ -3988,7 +3998,7 @@ snapshots:
     transitivePeerDependencies:
       - next
 
-  '@thor-commerce/ui@0.1.0(@primer/octicons-react@19.33.0(react@19.2.8))(@primer/react@38.35.0(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-is@19.2.8)(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(recharts@2.15.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))':
+  '@thor-commerce/ui@0.1.1(@primer/octicons-react@19.33.0(react@19.2.8))(@primer/react@38.35.0(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-is@19.2.8)(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react-hook-form@7.88.0(react@19.2.8))(react-router@7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(recharts@2.15.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8))':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@dnd-kit/modifiers': 8.0.0(@dnd-kit/core@6.3.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
@@ -4003,6 +4013,7 @@ snapshots:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
       react-dropzone: 20.1.2(@types/react@19.2.18)(react@19.2.8)
+      react-hook-form: 7.88.0(react@19.2.8)
       react-router: 7.13.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       recharts: 2.15.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
     transitivePeerDependencies:
@@ -5039,6 +5050,10 @@ snapshots:
       react: 19.2.8
     optionalDependencies:
       '@types/react': 19.2.18
+
+  react-hook-form@7.88.0(react@19.2.8):
+    dependencies:
+      react: 19.2.8
 
   react-intersection-observer@10.1.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
