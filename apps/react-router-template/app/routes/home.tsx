@@ -1,7 +1,7 @@
 import { authenticate } from "~/thor.server";
 import type { Route } from "./+types/home";
-import { DataTable, Table } from "@primer/react/experimental";
-import { Link, PageLayout } from "@primer/react";
+import { AppPage, DataTable, Section } from "@thor-commerce/ui";
+import { Link } from "@primer/react";
 import { RouterLink } from "~/components";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -36,36 +36,29 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
-    <PageLayout>
-      <PageLayout.Content>
-        <Table.Container>
-          <Table.Title as="h2" id="repositories-default">
-            Repositories
-          </Table.Title>
-          <DataTable
-            aria-labelledby="repositories-default"
-            data={loaderData.products}
-            columns={[
-              {
-                header: "Product",
-                field: "name",
-                rowHeader: true,
-                renderCell: (row) => (
-                  <Link as={RouterLink} to={`products/${row.id}`}>
-                    {row.name}
-                  </Link>
-                ),
-              },
-
-              {
-                id: "variants",
-                header: "Variants count",
-                renderCell: (row) => row.variants.totalCount,
-              },
-            ]}
-          />
-        </Table.Container>
-      </PageLayout.Content>
-    </PageLayout>
+    <AppPage title="Products">
+      <Section title="Products" flush>
+        <DataTable
+          data={loaderData.products}
+          columns={[
+            {
+              header: "Product",
+              field: "name",
+              rowHeader: true,
+              renderCell: (row) => (
+                <Link as={RouterLink} to={`products/${row.id}`}>
+                  {row.name}
+                </Link>
+              ),
+            },
+            {
+              id: "variants",
+              header: "Variants",
+              renderCell: (row) => row.variants.totalCount,
+            },
+          ]}
+        />
+      </Section>
+    </AppPage>
   );
 }

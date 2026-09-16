@@ -10,6 +10,7 @@ import {
 } from "react-router";
 import { useEffect } from "react";
 
+import "@thor-commerce/ui/styles.css";
 import "./app.css";
 
 import type { Route } from "./+types/root";

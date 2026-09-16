@@ -8,7 +8,8 @@ This template includes:
 - A webhook endpoint
 - Example admin GraphQL queries
 - Generated GraphQL types via codegen
-- Primer React for UI primitives
+- `@thor-commerce/ui` for dashboard-compatible app layouts and components
+- Primer React for underlying UI primitives
 - Server-side rendering with React Router
 - Automatic light/dark appearance synchronization with the Thor dashboard
 
@@ -19,12 +20,13 @@ This template includes:
 - `typescript`
 - `@thor-commerce/thor-app-react-router`
 - `@thor-commerce/app-bridge-react`
+- `@thor-commerce/ui`
 - `@primer/react`
 - `graphql-codegen`
 
 ## Requirements
 
-- Node.js 20+
+- Node.js 22.22+
 - pnpm
 - A Thor Commerce app with a client ID, client secret, app URL, and scopes
 
@@ -113,6 +115,20 @@ parallel, so doing both can race when an expiring offline token is refreshed.
 The app is wrapped with `AppProvider` so it can run as an embedded Thor app.
 
 The auth callback route lives at `app/api/auth.tsx` and uses the Thor React Router server helpers.
+
+### User interface
+
+Use components from `@thor-commerce/ui` for app-rendered page content so apps
+match the Thor dashboard. The host dashboard owns navigation; embedded apps own
+their main content. The package builds on Primer React, which remains available
+for lower-level controls that the shared package does not provide.
+
+The package stylesheet is imported once in `app/root.tsx`. Import components
+from the package root using standard library imports:
+
+```tsx
+import { AppPage, DataTable, Section } from "@thor-commerce/ui";
+```
 
 ### GraphQL
 

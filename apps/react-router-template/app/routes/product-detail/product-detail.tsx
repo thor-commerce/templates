@@ -1,6 +1,7 @@
 import { authenticate } from "~/thor.server";
 
-import { Link, PageLayout } from "@primer/react";
+import { AppPage, Section } from "@thor-commerce/ui";
+import { Link, Text } from "@primer/react";
 import type { Route } from "./+types/product-detail";
 import { RouterLink } from "~/components";
 
@@ -37,15 +38,17 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
-    <PageLayout>
-      <PageLayout.Content>
+    <AppPage
+      title={loaderData.product.name}
+      contextArea={
         <Link as={RouterLink} to="/">
-          Back to products
+          Products
         </Link>
-        <div>Product details</div>
-        <div>Name: {loaderData.product.name}</div>
-        <div>Description: {loaderData.product.description}</div>
-      </PageLayout.Content>
-    </PageLayout>
+      }
+    >
+      <Section title="Product details">
+        <Text as="p">{loaderData.product.description}</Text>
+      </Section>
+    </AppPage>
   );
 }

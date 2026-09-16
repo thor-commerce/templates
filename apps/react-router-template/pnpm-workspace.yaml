@@ -1,6 +1,7 @@
 minimumReleaseAgeExclude:
   - "@thor-commerce/thor-api"
   - "@thor-commerce/thor-app-react-router"
+  - "@thor-commerce/ui"
 
 allowBuilds:
   esbuild: true

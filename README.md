@@ -8,7 +8,7 @@ This repository currently contains a React Router starter app for embedded Thor 
 
 | Template | Description |
 | --- | --- |
-| `apps/react-router-template` | Embedded Thor Commerce app starter built with React Router v7, React 19, TypeScript, Primer React, and Thor app helpers. |
+| `apps/react-router-template` | Embedded Thor Commerce app starter built with React Router v7, React 19, TypeScript, `@thor-commerce/ui`, Primer React, and Thor app helpers. |
 
 ## React Router Template
 
@@ -20,13 +20,14 @@ The React Router template includes:
 - Generated GraphQL types
 - A webhook endpoint
 - Server-side rendering through React Router
+- Thor dashboard-compatible components from `@thor-commerce/ui`
 - Primer React UI primitives
 
 See [apps/react-router-template/README.md](apps/react-router-template/README.md) for the full template guide.
 
 ## Requirements
 
-- Node.js 20+
+- Node.js 22.22+
 - pnpm
 - A Thor Commerce app with a client ID, client secret, app URL, and required scopes
 
