@@ -4,6 +4,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
   useRouteLoaderData,
   useRouteError,
   type HeadersFunction,
@@ -26,8 +27,14 @@ type AppAppearance = "dark" | "light";
 
 const APPEARANCE_COOKIE = "thor_app_appearance";
 const APPEARANCE_STORAGE_KEY = "thor-app-appearance";
+let lastKnownAppearance: AppAppearance | null = null;
 
-function appearanceFromCookie(request: Request): AppAppearance | null {
+function appearanceFromRequest(request: Request): AppAppearance | null {
+  const queryAppearance = new URL(request.url).searchParams.get("appearance");
+  if (queryAppearance === "dark" || queryAppearance === "light") {
+    return queryAppearance;
+  }
+
   const cookies = request.headers.get("cookie")?.split(";") ?? [];
   const appearanceCookie = cookies.find((cookie) =>
     cookie.trim().startsWith(`${APPEARANCE_COOKIE}=`),
@@ -40,6 +47,7 @@ function clientAppearanceFallback(
   serverAppearance: AppAppearance,
 ): AppAppearance {
   if (typeof window === "undefined") return serverAppearance;
+  if (lastKnownAppearance) return lastKnownAppearance;
 
   try {
     const storedAppearance = window.localStorage.getItem(
@@ -51,6 +59,31 @@ function clientAppearanceFallback(
   } catch {
     return serverAppearance;
   }
+}
+
+function requestDashboardAppearance(): void {
+  if (window.parent === window) return;
+
+  const targetOrigin = window.location.ancestorOrigins?.item(0) || "*";
+  window.parent.postMessage(
+    {
+      namespace: "thorcommerce:app-bridge",
+      version: "1.0",
+      id: `appearance_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+      kind: "request",
+      type: "appearance:get",
+      source: "embedded-app",
+      target: "dashboard",
+    },
+    targetOrigin,
+  );
+  window.parent.postMessage(
+    {
+      source: "thor-app-bridge",
+      type: "thor-app-bridge:appearance-request",
+    },
+    targetOrigin,
+  );
 }
 
 export const links: Route.LinksFunction = () => [
@@ -68,6 +101,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const rootData = useRouteLoaderData<typeof loader>("root");
+  const location = useLocation();
   const initialAppearance = clientAppearanceFallback(
     rootData?.appearance ?? "light",
   );
@@ -76,6 +110,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     initialAppearance === "dark" ? "#0d1117" : "#ffffff";
 
   useEffect(() => {
+    lastKnownAppearance = appearance;
     try {
       window.localStorage.setItem(APPEARANCE_STORAGE_KEY, appearance);
     } catch {
@@ -93,7 +128,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
     document
       .querySelector('meta[name="color-scheme"]')
       ?.setAttribute("content", appearance);
+
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("appearance") !== appearance) {
+      url.searchParams.set("appearance", appearance);
+      window.history.replaceState(window.history.state, "", url);
+    }
   }, [appearance]);
+
+  useEffect(() => {
+    requestDashboardAppearance();
+    const retries = [100, 500].map((delay) =>
+      window.setTimeout(requestDashboardAppearance, delay),
+    );
+    return () => retries.forEach((timer) => window.clearTimeout(timer));
+  }, [location.pathname]);
 
   return (
     <html lang="en" style={{ backgroundColor: initialBackground }}>
@@ -106,6 +155,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body style={{ backgroundColor: initialBackground }}>
         <ThemeProvider
+          key={appearance}
           colorMode={appearance === "dark" ? "night" : "day"}
           dayScheme="light"
           nightScheme="dark"
@@ -127,7 +177,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   return {
     clientId: process.env.THOR_APP_CLIENT_ID || "",
     appBridgeUrl: process.env.THOR_APP_BRIDGE_URL || undefined,
-    appearance: appearanceFromCookie(request),
+    appearance: appearanceFromRequest(request),
   };
 };
 
