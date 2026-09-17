@@ -9,16 +9,13 @@ import {
   useRouteError,
   type HeadersFunction,
 } from "react-router";
-import { useEffect } from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 
 import "@thor-commerce/ui/styles.css";
 import "./app.css";
 
 import type { Route } from "./+types/root";
-import {
-  AppProvider,
-  useAppAppearance,
-} from "@thor-commerce/thor-app-react-router/react";
+import {AppProvider} from "@thor-commerce/thor-app-react-router/react";
 
 import { BaseStyles, ThemeProvider } from "@primer/react";
 import { boundary } from "@thor-commerce/thor-app-react-router/server";
@@ -27,7 +24,8 @@ type AppAppearance = "dark" | "light";
 
 const APPEARANCE_COOKIE = "thor_app_appearance";
 const APPEARANCE_STORAGE_KEY = "thor-app-appearance";
-let lastKnownAppearance: AppAppearance | null = null;
+const useHydratedLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 function appearanceFromRequest(request: Request): AppAppearance | null {
   const queryAppearance = new URL(request.url).searchParams.get("appearance");
@@ -43,28 +41,46 @@ function appearanceFromRequest(request: Request): AppAppearance | null {
   return value === "dark" || value === "light" ? value : null;
 }
 
-function clientAppearanceFallback(
-  serverAppearance: AppAppearance,
-): AppAppearance {
-  if (typeof window === "undefined") return serverAppearance;
-  if (lastKnownAppearance) return lastKnownAppearance;
+function dashboardOrigin(): string | undefined {
+  const ancestorOrigin = window.location.ancestorOrigins?.item(0);
+  if (ancestorOrigin) return ancestorOrigin;
+  if (!document.referrer) return undefined;
 
   try {
-    const storedAppearance = window.localStorage.getItem(
-      APPEARANCE_STORAGE_KEY,
-    );
-    return storedAppearance === "dark" || storedAppearance === "light"
-      ? storedAppearance
-      : serverAppearance;
+    const referrerOrigin = new URL(document.referrer).origin;
+    return referrerOrigin === window.location.origin
+      ? undefined
+      : referrerOrigin;
   } catch {
-    return serverAppearance;
+    return undefined;
   }
 }
 
-function requestDashboardAppearance(): void {
+function appearanceFromMessage(value: unknown): AppAppearance | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+
+  const message = value as {
+    namespace?: string;
+    payload?: {colorMode?: string};
+    source?: string;
+    type?: string;
+  };
+  const isLegacy =
+    message.source === "thor-dashboard" &&
+    message.type === "thor-app-bridge:appearance";
+  const isModern =
+    message.namespace === "thorcommerce:app-bridge" &&
+    message.source === "dashboard" &&
+    message.type === "appearance:update";
+  if (!isLegacy && !isModern) return null;
+
+  const colorMode = message.payload?.colorMode;
+  return colorMode === "dark" || colorMode === "light" ? colorMode : null;
+}
+
+function requestDashboardAppearance(targetOrigin = dashboardOrigin()): void {
   if (window.parent === window) return;
 
-  const targetOrigin = window.location.ancestorOrigins?.item(0) || "*";
   window.parent.postMessage(
     {
       namespace: "thorcommerce:app-bridge",
@@ -75,15 +91,71 @@ function requestDashboardAppearance(): void {
       source: "embedded-app",
       target: "dashboard",
     },
-    targetOrigin,
+    targetOrigin ?? "*",
   );
   window.parent.postMessage(
     {
       source: "thor-app-bridge",
       type: "thor-app-bridge:appearance-request",
     },
-    targetOrigin,
+    targetOrigin ?? "*",
   );
+}
+
+function useDashboardAppearance(
+  initialAppearance: AppAppearance,
+  allowCachedAppearance: boolean,
+  routeKey: string,
+): AppAppearance {
+  const [appearance, setAppearance] = useState(initialAppearance);
+
+  useHydratedLayoutEffect(() => {
+    if (!allowCachedAppearance) return;
+
+    try {
+      const cachedAppearance = window.localStorage.getItem(
+        APPEARANCE_STORAGE_KEY,
+      );
+      if (cachedAppearance === "dark" || cachedAppearance === "light") {
+        setAppearance(cachedAppearance);
+      }
+    } catch {
+      // Storage can be unavailable in privacy-restricted embedded contexts.
+    }
+  }, [allowCachedAppearance]);
+
+  useEffect(() => {
+    if (window.parent === window) return;
+
+    const parentOrigin = dashboardOrigin();
+    const handleMessage = (event: MessageEvent) => {
+      if (event.source !== window.parent) return;
+      if (parentOrigin && event.origin !== parentOrigin) return;
+
+      const nextAppearance = appearanceFromMessage(event.data);
+      if (!nextAppearance) return;
+
+      setAppearance(nextAppearance);
+      try {
+        window.localStorage.setItem(APPEARANCE_STORAGE_KEY, nextAppearance);
+      } catch {
+        // Storage can be unavailable in privacy-restricted embedded contexts.
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    requestDashboardAppearance(parentOrigin);
+    const retries = [100, 500].map((delay) =>
+      window.setTimeout(() => requestDashboardAppearance(parentOrigin), delay),
+    );
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      retries.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [routeKey]);
+
+  return appearance;
 }
 
 export const links: Route.LinksFunction = () => [
@@ -102,21 +174,17 @@ export const links: Route.LinksFunction = () => [
 export function Layout({ children }: { children: React.ReactNode }) {
   const rootData = useRouteLoaderData<typeof loader>("root");
   const location = useLocation();
-  const initialAppearance = clientAppearanceFallback(
-    rootData?.appearance ?? "light",
+  const serverAppearance = rootData?.appearance ?? null;
+  const initialAppearance = serverAppearance ?? "light";
+  const appearance = useDashboardAppearance(
+    initialAppearance,
+    serverAppearance === null,
+    location.pathname,
   );
-  const appearance = useAppAppearance(initialAppearance);
   const initialBackground =
     initialAppearance === "dark" ? "#0d1117" : "#ffffff";
 
   useEffect(() => {
-    lastKnownAppearance = appearance;
-    try {
-      window.localStorage.setItem(APPEARANCE_STORAGE_KEY, appearance);
-    } catch {
-      // Storage can be unavailable in privacy-restricted embedded contexts.
-    }
-
     const secure = window.location.protocol === "https:" ? "; Secure" : "";
     document.cookie = `${APPEARANCE_COOKIE}=${appearance}; Path=/; Max-Age=31536000; SameSite=${secure ? "None" : "Lax"}${secure}`;
 
@@ -135,14 +203,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       window.history.replaceState(window.history.state, "", url);
     }
   }, [appearance]);
-
-  useEffect(() => {
-    requestDashboardAppearance();
-    const retries = [100, 500].map((delay) =>
-      window.setTimeout(requestDashboardAppearance, delay),
-    );
-    return () => retries.forEach((timer) => window.clearTimeout(timer));
-  }, [location.pathname]);
 
   return (
     <html lang="en" style={{ backgroundColor: initialBackground }}>

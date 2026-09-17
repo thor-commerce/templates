@@ -240,17 +240,15 @@ apps using older SDK versions continue to work.
 
 ### Dashboard appearance
 
-The template uses `useAppAppearance()` to follow the dashboard's resolved
-light or dark appearance. Primer switches between its `light` and `dark`
-schemes automatically when the dashboard preference changes. The last value
-reported by App Bridge is cached in browser storage and a cookie so subsequent
-document navigations render the matching scheme before React starts, avoiding
-a flash of the light theme in dark mode. The resolved mode is also mirrored in
-the embedded route URL, and route changes request it again from App Bridge. The
-Primer theme boundary is remounted when that mode changes, so apps using
-`navigationItems` keep the dashboard theme when the embedded route is replaced.
-The dashboard remains the source of truth and overwrites the cached value
-whenever its resolved appearance changes.
+The template follows the dashboard's resolved light or dark appearance through
+App Bridge. Primer switches between its `light` and `dark` schemes when that
+preference changes. The last confirmed value is cached in browser storage and
+a cookie, then mirrored in the embedded route URL. The first client render uses
+the server's value to avoid a hydration mismatch; a layout effect can apply the
+cached mode before paint when an iframe is replaced, and App Bridge immediately
+confirms or corrects it. The Primer theme boundary is remounted when the mode
+changes, so apps using `navigationItems` keep the dashboard theme across route
+and cross-app navigation. The dashboard remains the source of truth.
 
 ## Routing
 
