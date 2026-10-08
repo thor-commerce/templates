@@ -15,7 +15,9 @@ import "@thor-commerce/ui/styles.css";
 import "./app.css";
 
 import type { Route } from "./+types/root";
-import {AppProvider} from "@thor-commerce/thor-app-react-router/react";
+import {
+  ReactRouterAppBridgeProvider,
+} from "@thor-commerce/app-bridge-react/react-router";
 
 import { BaseStyles, ThemeProvider } from "@primer/react";
 import { boundary } from "@thor-commerce/thor-app-react-router/server";
@@ -181,45 +183,36 @@ export function Layout({ children }: { children: React.ReactNode }) {
     serverAppearance === null,
     location.pathname,
   );
-  const initialBackground =
-    initialAppearance === "dark" ? "#0d1117" : "#ffffff";
+  const background = appearance === "dark" ? "#0d1117" : "#ffffff";
 
   useEffect(() => {
     const secure = window.location.protocol === "https:" ? "; Secure" : "";
     document.cookie = `${APPEARANCE_COOKIE}=${appearance}; Path=/; Max-Age=31536000; SameSite=${secure ? "None" : "Lax"}${secure}`;
-
-    const background = appearance === "dark" ? "#0d1117" : "#ffffff";
-    document.documentElement.style.backgroundColor = background;
-    document.documentElement.style.colorScheme = appearance;
-    document.body.style.backgroundColor = background;
-    document.body.style.colorScheme = appearance;
-    document
-      .querySelector('meta[name="color-scheme"]')
-      ?.setAttribute("content", appearance);
 
     const url = new URL(window.location.href);
     if (url.searchParams.get("appearance") !== appearance) {
       url.searchParams.set("appearance", appearance);
       window.history.replaceState(window.history.state, "", url);
     }
-  }, [appearance]);
+  }, [appearance, location.pathname, location.search]);
 
   return (
-    <html lang="en" style={{ backgroundColor: initialBackground }}>
+    <html
+      lang="en"
+      style={{ backgroundColor: background, colorScheme: appearance }}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content={initialAppearance} />
+        <meta name="color-scheme" content={appearance} />
         <Meta />
         <Links />
       </head>
-      <body style={{ backgroundColor: initialBackground }}>
+      <body style={{ backgroundColor: background, colorScheme: appearance }}>
         <ThemeProvider
-          key={appearance}
           colorMode={appearance === "dark" ? "night" : "day"}
           dayScheme="light"
           nightScheme="dark"
-          preventSSRMismatch
         >
           <BaseStyles as={"main"} className="frame">
             {children}
@@ -236,20 +229,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   // eslint-disable-next-line no-undef
   return {
     clientId: process.env.THOR_APP_CLIENT_ID || "",
-    appBridgeUrl: process.env.THOR_APP_BRIDGE_URL || undefined,
     appearance: appearanceFromRequest(request),
   };
 };
 
 export default function App({ loaderData }: Route.ComponentProps) {
   return (
-    <AppProvider
-      embedded
-      clientId={loaderData.clientId}
-      appBridgeUrl={loaderData.appBridgeUrl}
-    >
+    <ReactRouterAppBridgeProvider clientId={loaderData.clientId}>
       <Outlet />
-    </AppProvider>
+    </ReactRouterAppBridgeProvider>
   );
 }
 

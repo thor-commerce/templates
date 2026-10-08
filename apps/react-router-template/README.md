@@ -52,6 +52,10 @@ and enterprise installations can optionally set:
 - `THOR_ADMIN_BASE_URL`
 - `THOR_APP_BRIDGE_URL`
 
+`THOR_APP_BRIDGE_URL` overrides the SDK's authentication bootstrap and document
+preload URL. The client uses the bundled modern App Bridge runtime rather than
+loading that script again after authentication.
+
 Example:
 
 ```env
@@ -100,7 +104,7 @@ app/
   routes/
     home.tsx                Product list example
     product-detail/         Product detail example
-  root.tsx                  App shell and AppProvider
+  root.tsx                  App shell and ReactRouterAppBridgeProvider
   thor.server.ts            Thor app configuration
   types/                    Generated GraphQL schema and typings
 ```
@@ -112,7 +116,10 @@ app/
 Each protected route calls `authenticate.admin(request)` in its own loader. Do
 not also authenticate in the root loader: React Router runs matched loaders in
 parallel, so doing both can race when an expiring offline token is refreshed.
-The app is wrapped with `AppProvider` so it can run as an embedded Thor app.
+The app is wrapped with `ReactRouterAppBridgeProvider` so host navigation uses
+React Router, including routes whose loaders take longer to resolve. Use this
+provider on its own; adding the legacy `AppProvider` also loads a navigation
+script that can fall back to reloading the document during a pending navigation.
 
 The auth callback route lives at `app/api/auth.tsx` and uses the Thor React Router server helpers.
 
@@ -246,9 +253,9 @@ preference changes. The last confirmed value is cached in browser storage and
 a cookie, then mirrored in the embedded route URL. The first client render uses
 the server's value to avoid a hydration mismatch; a layout effect can apply the
 cached mode before paint when an iframe is replaced, and App Bridge immediately
-confirms or corrects it. The Primer theme boundary is remounted when the mode
-changes, so apps using `navigationItems` keep the dashboard theme across route
-and cross-app navigation. The dashboard remains the source of truth.
+confirms or corrects it. The document background and Primer theme update together
+without remounting the page, preserving form drafts and focus when the mode
+changes. The dashboard remains the source of truth.
 
 ## Routing
 
